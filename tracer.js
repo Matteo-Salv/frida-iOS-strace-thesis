@@ -19,7 +19,7 @@ function FollowThread(tid) {
           iterator.putCallout(onMatch);
         }
         iterator.keep();
-      } while ((instruction = iterator.next()) !== null);
+      } while (iterator.next() !== null);
       function onMatch(context) {
         send(tid + ":" + context.x16.toInt32());
       }

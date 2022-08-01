@@ -1,3 +1,4 @@
+import datetime
 import frida
 import sys
 
@@ -8,12 +9,15 @@ syscalls = [syscall.split(". ") for syscall in raw_syscall_list]
 syscalls = {syscall[0]:syscall[1] for syscall in syscalls}
 
 def on_message(message, _):
+    # print(message)
+    # message[] viene utilizzato per leggere la stringa json inviata dalla funzione send in JS.
     thread_id, syscall_number = message["payload"].split(":")
     syscall_number = str(abs(int(syscall_number)))
     if syscall_number in syscalls.keys():
-        print(f"[{thread_id}]: {syscalls[syscall_number]}")
-    else:
-        print(f"[{thread_id}]: Unknown({syscall_number})")
+        now = datetime.datetime.now()
+        print(f"[{thread_id}] {now.strftime('%H:%M:%S')}: {syscalls[syscall_number]}")
+#    else:
+#        print(f"[{thread_id}]: Unknown({syscall_number})")
 
 
 def on_detached():
