@@ -33,6 +33,7 @@ def main(target: str) -> None:
             break
 
     pid = device.spawn([app_identifier])
+    print("pid: " + str(pid))
     session = device.attach(pid)
     session.on('detached', on_detached)
 
